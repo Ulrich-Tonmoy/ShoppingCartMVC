@@ -26,5 +26,11 @@ namespace Ch24ShoppingCartMVC.Models.DataAccess
         }
     
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<LineItem> LineItems { get; set; }
+        public DbSet<State> States { get; set; }
+        public DbSet<InvoiceData> InvoiceDatas { get; set; }
     }
 }

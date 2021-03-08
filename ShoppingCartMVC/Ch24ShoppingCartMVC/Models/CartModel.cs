@@ -13,49 +13,49 @@ namespace Ch24ShoppingCartMVC.Models{
             List<ProductViewModel> cart;
             object objCart = HttpContext.Current.Session["cart"];
             //Convert objCart to List<ProductViewModel>
-            ________________________________
+            cart = objCart as List<ProductViewModel>;
             if (cart == null)
             {   //Create the object cart
-                __________________________________
+                cart = new List<ProductViewModel>();
                 //Assign cart to the Session object cart
-                ____________________________________________
+                HttpContext.Current.Session["cart"] = cart;
             }
             return cart;
         }
         private ProductViewModel GetSelectedProduct(string id)
         {   //Create an OrderModel object called order
-            _______________________________
+            OrderModel order = new OrderModel();
             //Call the method GetSelectedProduct of the class OrderModel. Return the object returned by the call.
-            return _____________________________________
+            return order.GetSelectedProduct(id);
         }
         public CartViewModel GetCart(string id = "")
         {
             CartViewModel model = new CartViewModel();
             //Call the method GetCartFromDataStore
-            ____________________________________
+            model.Cart = GetCartFromDataStore();
             if (!string.IsNullOrEmpty(id))
                 //Called the method GetSelectedProduct with parameter id and assign the return object to the AddedProduct
-                ____________________________________________
+                model.AddedProduct = GetSelectedProduct(id);
             return model;
         }
         private void AddItemToDataStore(CartViewModel model)
         {   //Add the AddedProduct to the cart
-            __________________________________________
+            model.Cart.Add(model.AddedProduct);
         }
         public void AddToCart(CartViewModel model)
         {
             if (model.AddedProduct.ProductID != null)
             {
                 //Get the product id of the added product
-                ______________________________________________
+                string id = model.AddedProduct.ProductID;
                 //Find the product in the car that matches the id using lambda expression.
-                __________________________________________
+                ProductViewModel inCart = model.Cart.Find(x => x.ProductID == id);
                 if (inCart == null)
                     //Call the method AddItemToDataStore
-                    _________________________________________
+                    AddItemToDataStore(model);
                 else
                     //Increase the Quantity by the quantity of the added product
-                    ________________________________________
+                    inCart.Quantity += model.AddedProduct.Quantity;
             }
         }
                 

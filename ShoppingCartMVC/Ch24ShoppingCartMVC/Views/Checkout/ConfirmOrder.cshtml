@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "ConfirmOrder";
+    string day = DateTime.Now.DayOfWeek.ToString();
+}
+
+<h2>!!!Congratulations!!!</h2>
+<h3>Your Payment With @TempData["payment"] is Confirmed.</h3>
+<h3>Your Products will be Delivered in A week at @TempData["address"] .</h3>
+<br />
+<h1>Thank you for visiting us this beautiful @day!</h1>
