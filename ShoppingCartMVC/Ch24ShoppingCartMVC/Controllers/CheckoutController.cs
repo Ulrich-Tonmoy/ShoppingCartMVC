@@ -27,6 +27,12 @@ namespace Ch24ShoppingCartMVC.Controllers
                     item.ProductID, item.Name, item.Quantity, item.UnitPrice, item.Quantity * item.UnitPrice);
                 checkOutModel.Add(checkout);
             }
+
+            List<ProductViewModel> objCart = HttpContext.Session["cart"] as List<ProductViewModel>;
+            if (objCart.Count > 0)
+            {
+                Session["EmptyCart"] = null;
+            }
             return View(checkOutModel);
         }
 
@@ -36,10 +42,12 @@ namespace Ch24ShoppingCartMVC.Controllers
             List<ProductViewModel> objCart = HttpContext.Session["cart"] as List<ProductViewModel>;
             if (objCart.Count > 0)
             {
+                Session["cart"] = null;
                 TempData["payment"] = collection["payment"];
                 TempData["address"] = collection["address"];
                 return RedirectToAction("ConfirmOrder");
             }
+            Session["EmptyCart"] = "Cart is Empty";
             return RedirectToAction("Index");
         }
         [HttpGet]
